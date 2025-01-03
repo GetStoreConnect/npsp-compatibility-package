@@ -3,7 +3,7 @@
 
 WARNING: This unmanaged package comes delivered as unsupported from StoreConnect.
 
-The problem this solves:
+## The problem this solves:
 When using NPSP and StoreConnect, when an order is created and the customer account does not exist, the account that gets created is not of the Household Recordtype, instead, it is set to Organization. The related contact record that is then created is linked to this Organization account. When using NPSP, an “Anonymous Household” account is created when the contact is first created. These “Anonymous Household” records need to be removed and the first account record type needs to change to Household.
 
 ## Flow Overview:
