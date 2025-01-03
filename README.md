@@ -16,7 +16,7 @@ When using NPSP and StoreConnect, when an order is created and the customer acco
 [https://test.salesforce.com/packaging/installPackage.apexp?p0=04t92000000DhK5 ](https://test.salesforce.com/packaging/installPackage.apexp?p0=04t92000000DhK5).
 
 
-## Instructions for install & configure into your sandbox:
+## Instructions to install & configure into your sandbox:
 
 - Install the Unmanaged Package in your sandbox.
 - Collect UserID of the StoreConnect Sync User
