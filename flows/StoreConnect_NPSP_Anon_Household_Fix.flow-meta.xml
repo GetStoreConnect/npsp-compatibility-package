@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
-    <description>This flow changes the account record type of the related order record to Household and removes the Anonymous Household record created.</description>
+    <description>This flow changes the newly created account record type of the related order record to Household and removes the Anonymous Household record created.</description>
     <environments>Default</environments>
     <formulas>
         <name>account_creation_time_in_seconds</name>
