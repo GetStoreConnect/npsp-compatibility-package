@@ -19,32 +19,32 @@ When using NPSP and StoreConnect, when an order is created and the customer acco
 ## Instructions for install & configure into your sandbox:
 
 - Install the Unmanaged Package in your sandbox.
-![Install 1](/images/npsp_1a.png)
-![Install 2](/images/npsp_2.png)
+![Install 1](/images/npsp1a.png)
+![Install 2](/images/npsp2.png)
 - Collect UserID of the StoreConnect Sync User
     - Navigate to collect StoreConnect Sync User ID.
     - Setup > Users. Find StoreConnect Sync User. 
     - In the URL when you open up the user record you can find the userid by looking for “page?address=%2F” and taking the value after that until the next “%”.
     - Collect this value, we will use it later in the flow.
-    - ![Sync](/images/npsp_3.png)
+    - ![Sync](/images/npsp3.png)
 - Collect Recordtypeid of the Household Account Record Type
     - Navigate to collect the Household Account Record Type.
     - Setup > Object Manager > Account > Record Types > Household Account
     - In the URL when you open up the Household Account record type you can find the record if after “/RecordTypes/” and before “/view”. 
     - Collect this value, we will use it later in the flow.
-    - ![AccountRT](/images/npsp_4.png)
+    - ![AccountRT](/images/npsp4.png)
 - Follow the steps to modify the flow for your org.
     - Setup > Flow > “SC Transfer to Household Account”
     - Steps 1 - 11 are in each image marked with a red arrow.
-    - ![Flow1](/images/npsp_5.png)
-    - ![Flow2](/images/npsp_6.png)
-    - ![Flow3](/images/npsp_7.png)
-    - ![Flow4](/images/npsp_8.png)
-    - ![Flow5](/images/npsp_9.png)
-    - ![Flow6](/images/npsp_10.png)
-    - ![Flow7](/images/npsp_11.png)
-    - ![Flow8](/images/npsp_12.png)
-    - ![Flow9](/images/npsp_13.png)
+    - ![Flow1](/images/npsp5.png)
+    - ![Flow2](/images/npsp6.png)
+    - ![Flow3](/images/npsp7.png)
+    - ![Flow4](/images/npsp8.png)
+    - ![Flow5](/images/npsp9.png)
+    - ![Flow6](/images/npsp10.png)
+    - ![Flow7](/images/npsp11.png)
+    - ![Flow8](/images/npsp12.png)
+    - ![Flow9](/images/npsp13.png)
 - Complete an order on the store as a new customer to test.
 
 
