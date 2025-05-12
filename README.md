@@ -3,34 +3,51 @@
 
 WARNING: This unmanaged package comes delivered as unsupported from StoreConnect.
 
-The problem this solves:
-When using NPSP and StoreConnect, when an order is created and the customer account does not exist, the account that gets created is not of the Household Recordtype, instead, it is set to Organization. The related contact record that is then created is linked to this Organization account. When using NPSP, an “Anonymous Household” account is created when the contact is first created. These “Anonymous Household” records need to be removed and the first account record type needs to change to Household.
+## ALERT: This unmanaged package just a starting point to begin modifying the contacts & accounts associated with the StoreConnect Order. You will 100% need to modify this flow to meet your business needs.
 
-Flow Overview:
-- Trigger Criteria: Order Create and  when the order is created by the StoreConnect Sync User.
+The problem this solves:
+When using NPSP and StoreConnect, when an order is created and the customer account does not exist, the account that gets created is not of the Household Record Type, instead, it is set to Organization. The related contact record that is then created is linked to this Organization account. When using NPSP, an “Anonymous Household” account is created when the contact is first created. These “Anonymous Household” records need to be removed and the first account record type needs to change to Household.
+
+## Flow Overview:
+- Trigger Criteria: Order Create and when the order is created by the StoreConnect Sync User.
 - Changes the Record Type of the Account that was just created related to this Order to “HouseHold”
 - Find the most recent Anonymous Household record created by StoreConnect Sync User.
 - Delete this single Anonymous Household record that is associated with the order.
 
-Unmanaged Package Link:
-https://test.salesforce.com/packaging/installPackage.apexp?p0=04t92000000DhK5
+## Unmanaged Package Link:
+[https://test.salesforce.com/packaging/installPackage.apexp?p0=04t92000000DhK5 ](https://test.salesforce.com/packaging/installPackage.apexp?p0=04t92000000DhK5).
 
-Instructions for install & configure into your sandbox:
+
+## Instructions for install & configure into your sandbox:
 
 - Install the Unmanaged Package in your sandbox.
+![Install 1](/images/npsp1a.png)
+![Install 2](/images/npsp2.png)
 - Collect UserID of the StoreConnect Sync User
-    - Store in these instructions to reference later.
+    - Navigate to collect StoreConnect Sync User ID.
+    - Setup > Users. Find StoreConnect Sync User. 
+    - In the URL when you open up the user record you can find the userid by looking for “page?address=%2F” and taking the value after that until the next “%”.
+    - Collect this value, we will use it later in the flow.
+    - ![Sync](/images/npsp3.png)
 - Collect Recordtypeid of the Household Account Record Type
-    - Store in these instructions to reference later.
-- Find the flow named “StoreConnect: NPSP Anon Household Fix”. Open flow. Save a new version.
-- Modify the entry criteria of the flow to replace the “OwnerId” value with your StoreConnect Sync Userid. 
-- Modify the “Change Record Type of Account” element. 
-    - Replace the RecordTypeId value with your Account Household RecordTypeId.
-- Modify the “Get AnonHousehold” element. 
-    - Replace the RecordTypeId value with your Account Household RecordTypeId.. 
-    - Replace CreatedById with the StoreConnect Sync Userid
-- Save & Activate.
+    - Navigate to collect the Household Account Record Type.
+    - Setup > Object Manager > Account > Record Types > Household Account
+    - In the URL when you open up the Household Account record type you can find the record if after “/RecordTypes/” and before “/view”. 
+    - Collect this value, we will use it later in the flow.
+    - ![AccountRT](/images/npsp4.png)
+- Follow the steps to modify the flow for your org.
+    - Setup > Flow > “SC Transfer to Household Account”
+    - Steps 1 - 11 are in each image marked with a red arrow.
+    - ![Flow1](/images/npsp5.png)
+    - ![Flow2](/images/npsp6.png)
+    - ![Flow3](/images/npsp7.png)
+    - ![Flow4](/images/npsp8.png)
+    - ![Flow5](/images/npsp9.png)
+    - ![Flow6](/images/npsp10.png)
+    - ![Flow7](/images/npsp11.png)
+    - ![Flow8](/images/npsp12.png)
+    - ![Flow9](/images/npsp13.png)
 - Complete an order on the store as a new customer to test.
-- Review results in org.
+
 
 

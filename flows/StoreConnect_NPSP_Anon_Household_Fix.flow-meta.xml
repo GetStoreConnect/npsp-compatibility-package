@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <description>This flow changes the newly created account record type of the related order record to Household and removes the Anonymous Household record created.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>account_creation_time_in_seconds</name>
+        <dataType>Number</dataType>
+        <expression>({!$Record.CreatedDate} - {!$Record.Account.CreatedDate})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>Date30DaysFromToday</name>
+        <dataType>Date</dataType>
+        <expression>TODAY() + 30</expression>
+    </formulas>
+    <formulas>
+        <name>holdhold_account_new_name</name>
+        <dataType>String</dataType>
+        <expression>HTMLENCODE({!order_contact_last_name}) + &apos; (&apos; +HTMLENCODE({!order_contact_first_name}) + &apos;)&apos;+ &apos; Household&apos;</expression>
+    </formulas>
+    <formulas>
+        <name>opportunity_name</name>
+        <dataType>String</dataType>
+        <expression>$Record.BillToContact.FirstName &amp; &quot; &quot; &amp; $Record.BillToContact.LastName &amp; &quot; Opportunity from StoreConnect Purchase&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>transfer_date_time</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <interviewLabel>StoreConnect: NPSP Anon Household Fix {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>StoreConnect: NPSP Anon Household Fix</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordDeletes>
+        <description>Remove the extra Anon Household record</description>
+        <name>Delete_Anon_Household</name>
+        <label>Delete Anon Household</label>
+        <locationX>176</locationX>
+        <locationY>539</locationY>
+        <inputReference>Get_Anon_Household</inputReference>
+    </recordDeletes>
+    <recordLookups>
+        <description>Get most recent anon household that was created by storeconnect sync user, and record type of household.
+Install Instructions: Replace RecordTypeID with the Account Household RecordtypeId. Replace CreatedById with the StoreConnect Sync Userid</description>
+        <name>Get_Anon_Household</name>
+        <label>Get Anon Household</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Delete_Anon_Household</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0124T000000C0IyQAK</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Anonymous Household</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CreatedById</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>005Qh000002NPvpIAG</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>This will change the account record type that was created on the order from Organization to Household.
+Install Instructions: Replace the RecordTypeId value with your Account Household RecordTypeId</description>
+        <name>Change_Record_Type_of_Account</name>
+        <label>Change Record Type of Account</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <connector>
+            <targetReference>Get_Anon_Household</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>0124T000000C0IyQAK</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record.Account</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Change_Record_Type_of_Account</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OwnerId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>005Qh000002NPvpIAG</stringValue>
+            </value>
+        </filters>
+        <object>Order</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>account_life_in_seconds</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>account_original_name</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>account_to_transfer_to</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>contact_name</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>order_contact_first_name</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>order_contact_last_name</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>original_account_id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>
