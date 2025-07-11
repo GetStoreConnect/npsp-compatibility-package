@@ -1,5 +1,5 @@
 
-# StoreConnect NPSP Anon Household Fix
+# StoreConnect NPSP Anon Household
 
 WARNING: This unmanaged package comes delivered as unsupported from StoreConnect.
 
