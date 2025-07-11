@@ -1,9 +1,7 @@
 
 # StoreConnect NPSP Anon Household
 
-WARNING: This unmanaged package comes delivered as is and is unsupported from StoreConnect.
-
-## ALERT: This unmanaged package just a starting point to begin modifying the contacts & accounts associated with the StoreConnect Order. You will 100% need to modify this flow to meet your business needs.
+## ALERT: This is an unmanaged package provided as a starting point to help you build a solution tailored to your specific needs. Please note that it is not officially supported by our team, and any implementation or customization is your responsibility..
 
 The problem this solves:
 When using NPSP and StoreConnect, when an order is created and the customer account does not exist, the account that gets created is not of the Household Record Type, instead, it is set to Organization. The related contact record that is created is linked to this Organization account. When using NPSP, an “Anonymous Household” account is created when the contact is first created. These “Anonymous Household” records need to be removed and the first account record type needs to change to Household.
